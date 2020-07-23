@@ -8,6 +8,11 @@
 /*----------------------------------------------------------------------------*/
 
 // ---- START VEXCODE CONFIGURED DEVICES ----
+// Robot Configuration:
+// [Name]               [Type]        [Port(s)]
+// Controller1          controller                    
+// leftWheels           motor         16              
+// rightWheels          motor         15              
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
@@ -69,7 +74,26 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
+    int Axis1Position;
+    int Axis3Position;
 
+    Axis1Position = Controller1.Axis1.position(percent);
+    Axis3Position = Controller1.Axis3.position(percent);
+
+    Controller1.Screen.setCursor(1,1);
+    Controller1.Screen.clearLine();
+    Controller1.Screen.print(Axis3Position);
+
+    if(Axis3Position != 0) {
+      leftWheels.spin(forward, Axis3Position, percent);
+      rightWheels.spin(forward, Axis3Position, percent);
+    } else if(Axis1Position != 0) {
+      leftWheels.spin(forward, Axis1Position, percent);
+      rightWheels.spin(reverse, Axis1Position, percent);
+    } else if (Axis3Position == 0 || Axis1Position == 0) {
+      leftWheels.setVelocity(0, percent);
+      rightWheels.setVelocity(0, percent);
+    }
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
