@@ -16,6 +16,7 @@
 // ---- END VEXCODE CONFIGURED DEVICES ----
 
 #include "vex.h"
+#include "quahk-api.h"
 
 using namespace vex;
 
@@ -74,20 +75,8 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
-    int Axis1Position;
-    int Axis3Position;
-    int finalLeft;
-    int finalRight;
-
-    Axis1Position = Controller1.Axis1.position(percent);
-    Axis3Position = Controller1.Axis3.position(percent);
-
-    finalLeft = Axis3Position + Axis1Position;
-    finalRight = Axis3Position - Axis1Position;
-
-    leftWheels.spin(forward, finalLeft, percent);
-    rightWheels.spin(forward, finalRight, percent);
-
+    
+    bullDrive();
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
